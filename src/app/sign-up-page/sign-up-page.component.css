@@ -1,0 +1,8 @@
+.container-color {
+    background: linear-gradient(to bottom, #a1c5f0, #62acf7);
+    border-radius: 30px;
+}
+
+.background-color {
+    background: linear-gradient(to top, #ffffff, #dbdbdc);
+}
