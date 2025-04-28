@@ -50,7 +50,7 @@ export class AdminDashboardComponent {
     window.location.href = '/sign-in'; 
   }
 
-  goToTeacherDashboard() {
+  switchToTeacher() {
     this.router.navigate(['/teacher-dashboard']); 
   }
 

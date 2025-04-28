@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpPageComponent } from './sign-up-page/sign-up-page.component';
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component'; 
+import { TeacherDashboardComponent } from './pages/teacher-dashboard/teacher-dashboard.component';
 
 
 export const routes: Routes = [
@@ -24,9 +25,12 @@ export const routes: Routes = [
     path: 'admin-dashboard', 
     component: AdminDashboardComponent, 
     title: 'Admin Dashboard'    
+  },
+
+  {
+    path: 'teacher-dashboard',
+    component: TeacherDashboardComponent,
+    title: 'Teacher Dashboard'
   }
-
-  { path: 'teacher-dashboard', 
-    component: TeacherDashboardComponent }
-
+  
 ];
