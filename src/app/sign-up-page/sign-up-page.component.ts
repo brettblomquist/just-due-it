@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { UserService, User } from '../user.service';
+import { Router } from '@angular/router';
+import { AuthService, UserInfo } from '../auth.service';
 
 @Component({
   selector: 'app-sign-up-page',
@@ -10,23 +12,54 @@ import { UserService, User } from '../user.service';
   styleUrl: './sign-up-page.component.css'
 })
 export class SignUpPageComponent {
-  user = {
-    id: '',
-    username: '',
-    password: '',
+  user: UserInfo = {
+    fname : '',
+    lname : '',
+    email : '',
+    password : '',
     role: ''
   }
 
-  selectRole(role: string){
-    this.user.role = role
-    console.log('Role switched to: ' + role)
+  private authService = inject(AuthService)
+
+  selectRole(role: string): void {
+    this.user.role = role;
   }
 
-  constructor(private userService: UserService){}
+  signUp() {
 
-  signUp(): void {
-    this.userService.addUser(this.user);
-  };
+    if (this.user.fname == '') {
+      alert('Please enter your first name')
+      return;
+    }
+    if (this.user.lname == '') {
+      alert('Please enter your Last name')
+      return;
+    }
 
+    if (this.user.email == '') {
+      alert('Please enter email');
+      return;
+    }
 
+    if (this.user.password == '') {
+      alert('Please enter your password')
+      return;
+    }
+
+    if (this.user.role == null){
+      alert('Please select your role')
+      return;
+    }
+
+    this.authService.register(this.user);
+    this.user = {
+    fname : '',
+    lname : '',
+    email : '',
+    password : '',
+    role: ''
+    }
+
+  }
 }
