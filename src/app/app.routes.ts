@@ -3,6 +3,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpPageComponent } from './sign-up-page/sign-up-page.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component'; 
 import { HomeComponent } from './home/home.component';
+import { TeacherDashboardComponent } from './teacher-dashboard/teacher-dashboard.component';
 
 
 export const routes: Routes = [
@@ -30,7 +31,12 @@ export const routes: Routes = [
     path: 'home', 
     component: HomeComponent, 
     title: 'Home'    
-  }
+  },
+  { 
+    path: 'teacher-dashboard', 
+    component: TeacherDashboardComponent, 
+    title: 'Dashboard'    
+  },
 
   
 ];
