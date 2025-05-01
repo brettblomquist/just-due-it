@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-home',
@@ -8,9 +9,11 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  username: string | null = '';
+  private authService = inject(AuthService);
 
-  constructor(private route: ActivatedRoute) {
-    this.username = this.route.snapshot.paramMap.get('username');
+  logout() {
+    this.authService.logout();
   }
+
+  user = this.authService.getUser();
 }
