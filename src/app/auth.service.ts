@@ -26,9 +26,14 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    signInWithEmailAndPassword(this.auth, email, password).then(() => {
+    signInWithEmailAndPassword(this.auth, email, password).then((res) => {
+      const user = res.user;
+      if (user?.email == 'admin@admin.com'){
+        this.router.navigate(['/admin-dashboard'])
+      } else {
+        this.router.navigate(['/home'])
+      }
       localStorage.setItem('token', 'true');
-      this.router.navigate(['/home'])
     }, err => {
       alert(`Something went wrong: ${err.message} `);
       this.router.navigate(['/sign-in'])
