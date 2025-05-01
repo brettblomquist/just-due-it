@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ScheduleComponent } from './schedule.component';
+import { FormsModule } from '@angular/forms';
 
 describe('ScheduleComponent', () => {
   let component: ScheduleComponent;
@@ -8,7 +9,9 @@ describe('ScheduleComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ScheduleComponent]
+      imports: [ScheduleComponent,
+        FormsModule
+      ]
     })
     .compileComponents();
 
