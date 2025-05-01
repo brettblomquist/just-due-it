@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, GoogleAuthProvider, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateCurrentUser, updatePhoneNumber, updateProfile, User } from '@angular/fire/auth';
+import { Auth, authState, createUserWithEmailAndPassword, GoogleAuthProvider, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateCurrentUser, updatePhoneNumber, updateProfile, User } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 export interface UserInfo{
   fname: string,
@@ -15,8 +16,14 @@ export interface UserInfo{
 })
 export class AuthService {
 
-  private auth = inject(Auth);
+  //private auth = inject(Auth);
   private router = inject(Router);
+
+  user$: Observable<User | null>;
+
+  constructor(private auth: Auth){
+    this.user$ = authState(this.auth);
+  }
 
   login(email: string, password: string) {
     signInWithEmailAndPassword(this.auth, email, password).then(() => {

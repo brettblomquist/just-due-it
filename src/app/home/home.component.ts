@@ -15,5 +15,13 @@ export class HomeComponent {
     this.authService.logout();
   }
 
+  ngOnInit(): void {
+    this.authService.user$.subscribe((user) => {
+      this.user = user
+    })
+  }
+
+
+
   user = this.authService.getUser();
 }
