@@ -8,7 +8,8 @@ export interface UserInfo{
   lname: string,
   email: string,
   password: string,
-  role: string
+  role: string,
+  phone: string
 }
 
 @Injectable({
