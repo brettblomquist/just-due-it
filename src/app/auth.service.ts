@@ -8,7 +8,8 @@ export interface UserInfo{
   lname: string,
   email: string,
   password: string,
-  role: string
+  role: string,
+  phone: string
 }
 
 @Injectable({
@@ -28,8 +29,12 @@ export class AuthService {
   login(email: string, password: string) {
     signInWithEmailAndPassword(this.auth, email, password).then((res) => {
       const user = res.user;
+      const displayName = user?.displayName;
+      const role = displayName?.includes('(student') ? 'student' : 'teacher';
       if (user?.email == 'admin@admin.com'){
         this.router.navigate(['/admin-dashboard'])
+      } else if (role == 'teacher') {
+        this.router.navigate(['/teacher-dashboard'])
       } else {
         this.router.navigate(['/home'])
       }
@@ -44,7 +49,7 @@ export class AuthService {
     createUserWithEmailAndPassword(this.auth, aUser.email, aUser.password)
       .then(res => {
         const user: User = res.user;
-        const displayName = aUser.fname + ' ' + aUser.lname;
+        const displayName = aUser.fname + ' ' + aUser.lname + ' ' + '(' + aUser.role + ')';
         updateProfile(user, { displayName });
         alert('Registration Successful')
         this.router.navigate(['/sign-in'])

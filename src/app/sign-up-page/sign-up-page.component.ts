@@ -17,7 +17,8 @@ export class SignUpPageComponent {
     lname : '',
     email : '',
     password : '',
-    role: ''
+    role: '',
+    phone: 'None Entered'
   }
 
   private authService = inject(AuthService)
@@ -58,7 +59,8 @@ export class SignUpPageComponent {
     lname : '',
     email : '',
     password : '',
-    role: ''
+    role: '',
+    phone: 'None Entered'
     }
 
   }

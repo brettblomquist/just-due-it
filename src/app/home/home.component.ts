@@ -10,18 +10,25 @@ import { AuthService } from '../auth.service';
 })
 export class HomeComponent {
   private authService = inject(AuthService);
+  fname: string = '';
+  user: any = null;
 
   logout() {
     this.authService.logout();
   }
 
+
+
   ngOnInit(): void {
     this.authService.user$.subscribe((user) => {
       this.user = user
-    })
+    
+
+    if (this.user?.displayName){
+      this.fname = this.user.displayName.split(' ')[0];
+    }
+  })
   }
 
 
-
-  user = this.authService.getUser();
 }
