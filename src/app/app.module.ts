@@ -5,8 +5,8 @@ import { SchedulerModule } from 'angular-calendar-scheduler'
 import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 import {FormsModule} from '@angular/forms'
 import { BrowserModule } from '@angular/platform-browser';
-import { ScheduleComponent } from '../schedule/schedule.component';
-import { AppComponent } from '../app.component';
+import { ScheduleComponent } from './schedule/schedule.component';
+import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,8 @@ import { AppComponent } from '../app.component';
     SchedulerModule.forRoot({ locale: 'en', headerDateFormat: 'daysRange'}),
     FormsModule,
     BrowserModule,
-    ScheduleComponent
+    ScheduleComponent,
+    
   ],
   exports: [
     ScheduleComponent
