@@ -1,204 +1,207 @@
-import { Component, OnInit, Inject, 
-  LOCALE_ID, ViewChild, NgModule
- } from '@angular/core';
-import { WeekDay, WeekView,
-  WeekViewHourColumn} from 'calendar-utils';
-import {CalendarView, CalendarDateFormatter, DateAdapter} from 'angular-calendar';
-import {CalendarSchedulerEvent, CalendarSchedulerEventAction,
-   SchedulerDateFormatter, CalendarSchedulerViewComponent, 
-   SchedulerViewDay, SchedulerViewHour, DAYS_IN_WEEK, endOfPeriod, addPeriod, SchedulerViewHourSegment,
-  subPeriod, startOfPeriod, SchedulerEventTimesChangedEvent} from 'angular-calendar-scheduler';
-import { endOfDay, addMonths} from 'date-fns';
-import { Subject, SubjectLike } from 'rxjs';
-import { AppService } from '../app.service';
-import { SchedulerModule } from 'angular-calendar-scheduler';
-import { CalendarModule } from 'angular-calendar';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  ViewChild,
+  TemplateRef,
+} from '@angular/core';
+import {
+  startOfDay,
+  endOfDay,
+  subDays,
+  addDays,
+  endOfMonth,
+  isSameDay,
+  isSameMonth,
+  addHours,
+} from 'date-fns';
+import { Subject } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {
+  CalendarEvent,
+  CalendarEventAction,
+  CalendarEventTimesChangedEvent,
+  CalendarView,
+} from 'angular-calendar';
+import { EventColor } from 'calendar-utils';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-
-// export interface WeekViewAllDayEventResize {
-//     originalOffset: number;
-//     originalSpan: number;
-//     edge: string;
-//   }
-  
-//   export interface CalendarWeekViewBeforeRenderEvent extends WeekView {
-//     header: WeekDay[];
-//   }
+const colors: Record<string, EventColor> = {
+  red: {
+    primary: '#ad2121',
+    secondary: '#FAE3E3',
+  },
+  blue: {
+    primary: '#1e90ff',
+    secondary: '#D1E8FF',
+  },
+  yellow: {
+    primary: '#e3bc08',
+    secondary: '#FDF1BA',
+  },
+};
 
 @Component({
-  selector: 'schedule-component', 
-  templateUrl: './schedule.component.html',
-  styleUrl: './schedule.component.css',
-  imports: [FormsModule, CommonModule, SchedulerModule],
-  providers: [{
-    provide: CalendarDateFormatter,
-    useClass: SchedulerDateFormatter
-  }],
+  selector: 'mwl-schedule-component',
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  styles: [
+    `
+      h3 {
+        margin: 0 0 10px;
+      }
+
+      pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+      }
+    `,
+  ],
+  templateUrl: 'schedule.Component.html',
+  
 })
+export class ScheduleComponent {
+  @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
 
-export class ScheduleComponent implements OnInit {
-  title = 'schedule'
-
+  view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
 
-  view: CalendarView = CalendarView.Week;
   viewDate: Date = new Date();
-  viewDays: number = DAYS_IN_WEEK;
-  locale: string = 'en';
-  hourSegments: 1 | 2 | 4 | 6  = 2;
-  weekStartsOn: number = 0;
-  startsWithToday: boolean = true;
-  activeDayIsOpen: boolean = true;
-  excludeDays: number[] = []; // [0];
-  weekendDays: number[] = [0,6];
-  dayStartHour: number = 8;
-  dayEndHour: number = 20;
 
-  refresh: Subject<void> = new Subject();
+  modalData!: {
+    action: string;
+    event: CalendarEvent;
+  };
 
-  minDate: Date = new Date();
-  maxDate: Date = endOfDay(addMonths(new Date(), 1));
-  
-  dayModifier: Function;
-  hourModifier: Function;
-  segmentModifier: Function;
-  eventModifier: Function;
-
-  prevBtnDisabled: boolean = false;
-  nextBtnDisabled: boolean = false;
-
-  trackByHourColumn = (index: number, column: WeekViewHourColumn) =>
-    column.hours[0] ? column.hours[0].segments[0].date.toISOString() : column;
-
-  actions: CalendarSchedulerEventAction[] = [
-      {
-          when: 'enabled',
-          label: '<span class="valign-center"><i class="material-icons md-18 md-red-500">cancel</i></span>',
-          title: 'Delete',
-          onClick: (event: CalendarSchedulerEvent): void => {
-              console.log('Pressed action \'Delete\' on event ' + event.id);
-          }
+  actions: CalendarEventAction[] = [
+    {
+      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
+      a11yLabel: 'Edit',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        this.handleEvent('Edited', event);
       },
-      {
-          when: 'disabled',
-          label: '<span class="valign-center"><i class="material-icons md-18 md-red-500">autorenew</i></span>',
-          title: 'Restore',
-          onClick: (event: CalendarSchedulerEvent): void => {
-              console.log('Pressed action \'Restore\' on event ' + event.id);
-          }
-      }
+    },
+    {
+      label: '<i class="fas fa-fw fa-trash-alt"></i>',
+      a11yLabel: 'Delete',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        this.events = this.events.filter((iEvent) => iEvent !== event);
+        this.handleEvent('Deleted', event);
+      },
+    },
   ];
 
-  events!: CalendarSchedulerEvent[];
+  refresh = new Subject<void>();
 
-  @ViewChild(CalendarSchedulerViewComponent) calendarScheduler!: CalendarSchedulerViewComponent;
-  
-  constructor(@Inject(LOCALE_ID) locale: string, private appService: AppService, private dateAdapter: DateAdapter) {
-    this.locale = locale;
+  events: CalendarEvent[] = [
+    {
+      start: subDays(startOfDay(new Date()), 1),
+      end: addDays(new Date(), 1),
+      title: 'A 3 day event',
+      color: { ...colors['red'] },
+      actions: this.actions,
+      allDay: true,
+      resizable: {
+        beforeStart: true,
+        afterEnd: true,
+      },
+      draggable: true,
+    },
+    {
+      start: startOfDay(new Date()),
+      title: 'An event with no end date',
+      color: { ...colors['yellow'] },
+      actions: this.actions,
+    },
+    {
+      start: subDays(endOfMonth(new Date()), 3),
+      end: addDays(endOfMonth(new Date()), 3),
+      title: 'A long event that spans 2 months',
+      color: { ...colors['blue'] },
+      allDay: true,
+    },
+    {
+      start: addHours(startOfDay(new Date()), 2),
+      end: addHours(new Date(), 2),
+      title: 'A draggable and resizable event',
+      color: { ...colors['yellow'] },
+      actions: this.actions,
+      resizable: {
+        beforeStart: true,
+        afterEnd: true,
+      },
+      draggable: true,
+    },
+  ];
 
-    this.dayModifier = ((day: SchedulerViewDay): void => {
-        if (!this.isDateValid(day.date)) {
-            day.cssClass = 'cal-disabled';
-        }
-    }).bind(this);
+  activeDayIsOpen: boolean = true;
 
-    this.hourModifier = ((hour: SchedulerViewHour): void => {
-        if (!this.isDateValid(hour.date)) {
-            hour.cssClass = 'cal-disabled';
-        }
-    }).bind(this);
+  constructor(private modal: NgbModal) {}
 
-    this.segmentModifier = ((segment: SchedulerViewHourSegment): void => {
-        if (!this.isDateValid(segment.date)) {
-            segment.isDisabled = true;
-        }
-    }).bind(this);
+  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    if (isSameMonth(date, this.viewDate)) {
+      if (
+        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+        events.length === 0
+      ) {
+        this.activeDayIsOpen = false;
+      } else {
+        this.activeDayIsOpen = true;
+      }
+      this.viewDate = date;
+    }
+  }
 
-    this.eventModifier = ((event: CalendarSchedulerEvent): void => {
-        event.isDisabled = !this.isDateValid(event.start);
-    }).bind(this);
+  eventTimesChanged({
+    event,
+    newStart,
+    newEnd,
+  }: CalendarEventTimesChangedEvent): void {
+    this.events = this.events.map((iEvent) => {
+      if (iEvent === event) {
+        return {
+          ...event,
+          start: newStart,
+          end: newEnd,
+        };
+      }
+      return iEvent;
+    });
+    this.handleEvent('Dropped or resized', event);
+  }
 
-    this.dateOrViewChanged();
-}
+  handleEvent(action: string, event: CalendarEvent): void {
+    this.modalData = { event, action };
+    this.modal.open(this.modalContent, { size: 'lg' });
+  }
 
-ngOnInit(): void {
-    this.appService.getEvents(this.actions)
-        .then((events: CalendarSchedulerEvent[]) => this.events = events);
-}
+  addEvent(): void {
+    this.events = [
+      ...this.events,
+      {
+        title: 'New event',
+        start: startOfDay(new Date()),
+        end: endOfDay(new Date()),
+        color: colors['red'],
+        draggable: true,
+        resizable: {
+          beforeStart: true,
+          afterEnd: true,
+        },
+      },
+    ];
+  }
 
-viewDaysOptionChanged(viewDays: number): void {
-    console.log('viewDaysOptionChanged', viewDays);
-    this.calendarScheduler.setViewDays(viewDays);
-}
+  deleteEvent(eventToDelete: CalendarEvent) {
+    this.events = this.events.filter((event) => event !== eventToDelete);
+  }
 
-changeDate(date: Date): void {
-    console.log('changeDate', date);
-    this.viewDate = date;
-    this.dateOrViewChanged();
-}
-
-changeView(view: CalendarView): void {
-    console.log('changeView', view);
+  setView(view: CalendarView) {
     this.view = view;
-    this.dateOrViewChanged();
-}
+  }
 
-dateOrViewChanged(): void {
-    if (this.startsWithToday) {
-        this.prevBtnDisabled = !this.isDateValid(subPeriod(this.dateAdapter, CalendarView.Day/*this.view*/, this.viewDate, 1));
-        this.nextBtnDisabled = !this.isDateValid(addPeriod(this.dateAdapter, CalendarView.Day/*this.view*/, this.viewDate, 1));
-    } else {
-        this.prevBtnDisabled = !this.isDateValid(endOfPeriod(this.dateAdapter, CalendarView.Day/*this.view*/, subPeriod(this.dateAdapter, CalendarView.Day/*this.view*/, this.viewDate, 1)));
-        this.nextBtnDisabled = !this.isDateValid(startOfPeriod(this.dateAdapter, CalendarView.Day/*this.view*/, addPeriod(this.dateAdapter, CalendarView.Day/*this.view*/, this.viewDate, 1)));
-    }
-
-    if (this.viewDate < this.minDate) {
-        this.changeDate(this.minDate);
-    } else if (this.viewDate > this.maxDate) {
-        this.changeDate(this.maxDate);
-    }
+  closeOpenMonthViewDay() {
+    this.activeDayIsOpen = false;
+  }
 }
-
-private isDateValid(date: Date): boolean {
-    return /*isToday(date) ||*/ date >= this.minDate && date <= this.maxDate;
-}
-
-viewDaysChanged(viewDays: number): void {
-    console.log('viewDaysChanged', viewDays);
-    this.viewDays = viewDays;
-}
-
-dayHeaderClicked(day: SchedulerViewDay): void {
-    console.log('dayHeaderClicked Day', day);
-}
-
-hourClicked(hour: SchedulerViewHour): void {
-    console.log('hourClicked Hour', hour);
-}
-
-segmentClicked(action: string, segment: SchedulerViewHourSegment): void {
-    console.log('segmentClicked Action', action);
-    console.log('segmentClicked Segment', segment);
-}
-
-eventClicked(action: string, event: CalendarSchedulerEvent): void {
-    console.log('eventClicked Action', action);
-    console.log('eventClicked Event', event);
-}
-
-eventTimesChanged({ event, newStart, newEnd }: SchedulerEventTimesChangedEvent): void {
-    console.log('eventTimesChanged Event', event);
-    console.log('eventTimesChanged New Times', newStart, newEnd);
-    let ev = this.events.find(e => e.id === event.id);
-    if(ev){
-      ev.start = newStart;
-      ev.end = newEnd;
-    }
-    this.refresh.next();
-}
-  
-}
-
