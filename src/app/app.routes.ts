@@ -4,6 +4,7 @@ import { SignUpPageComponent } from './sign-up-page/sign-up-page.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component'; 
 import { HomeComponent } from './home/home.component';
 import { TeacherDashboardComponent } from './teacher-dashboard/teacher-dashboard.component';
+import { CoursePageComponent } from './course-page/course-page.component';
 
 
 export const routes: Routes = [
@@ -37,6 +38,11 @@ export const routes: Routes = [
     component: TeacherDashboardComponent, 
     title: 'Dashboard'    
   },
+  {
+    path: 'course/:userId/:courseId',
+    component: CoursePageComponent,
+    title: 'Course Details'
+  }
 
   
 ];

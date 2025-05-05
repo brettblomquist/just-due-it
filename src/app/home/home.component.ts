@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +15,7 @@ import { Firestore, collection, collectionData, doc, addDoc } from '@angular/fir
 export class HomeComponent {
   private authService = inject(AuthService);
   private firestore = inject(Firestore);
+  private router = inject(Router);
   fname: string = '';
   user: any = null;
   courses: any[] = [];
@@ -51,6 +52,13 @@ export class HomeComponent {
     if (this.newCourse != null){
       const courseCollection = collection( this.firestore, `users/${this.user.uid}/courses` );
       addDoc(courseCollection, {title: this.newCourse.title})
+    }
+  }
+
+  goToCourse(courseId: string): void {
+    const userId = this.user?.uid;
+    if (userId) {
+    this.router.navigate(['/course', userId, courseId]);
     }
   }
 }

@@ -18,7 +18,7 @@
   <div class="row">
     @for (course of courses; track $index) {
     <div class="col-12 col-md-6 col-lg-3 mb-4">
-      <div class="card h-100">
+      <div class="card h-100" (click)="goToCourse(course.id)" style="cursor: pointer;">
         <div class="card-body text-center mt-5 mb-5">
           <h5 class="card-title">{{ course.title }}</h5>
         </div>
