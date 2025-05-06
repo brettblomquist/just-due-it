@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Firestore, collection, collectionData, doc, addDoc } from '@angular/fire/firestore';
+import { Firestore, query, where, collection, collectionData, doc, addDoc, getDocs, updateDoc, arrayUnion } from '@angular/fire/firestore';
 
 
 @Component({
@@ -11,7 +11,7 @@ import { Firestore, collection, collectionData, doc, addDoc } from '@angular/fir
   imports: [CommonModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
-})
+  })
 export class HomeComponent {
   private authService = inject(AuthService);
   private firestore = inject(Firestore);
@@ -21,6 +21,7 @@ export class HomeComponent {
   courses: any[] = [];
   newCourse = { title: '' }
   isAddingCourse = signal(false);
+  courseCode: string = '';
 
   logout() {
     this.authService.logout();
@@ -49,10 +50,27 @@ export class HomeComponent {
   }
 
   addCourse(){
-    if (this.newCourse != null){
-      const courseCollection = collection( this.firestore, `users/${this.user.uid}/courses` );
-      addDoc(courseCollection, {title: this.newCourse.title})
-    }
+    const coursesCollection = collection(this.firestore, 'courses');
+    const courseQuery = query(coursesCollection, where('code', '==', this.courseCode))
+    getDocs(courseQuery).then((snapshot) => {
+      if (!snapshot.empty) {
+        const courseDoc = snapshot.docs[0];
+        const courseData = courseDoc.data();
+        const studentCoursesCollection = collection(this.firestore, `users/${this.user.uid}/courses`);
+        addDoc(studentCoursesCollection, {
+          title: courseData['title'],
+          description: courseData['description'],
+          teacherId: courseData['teacherId'],
+          courseId: courseDoc.id,
+        });
+  
+        const courseRef = doc(this.firestore, `courses/${courseDoc.id}`);
+        updateDoc(courseRef, {
+          students: arrayUnion(this.user.uid),
+        });
+      }
+    });
+  
   }
 
   goToCourse(courseId: string): void {

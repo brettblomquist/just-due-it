@@ -1,3 +1,4 @@
+@if(!isAddingCourse()){
 <div class="container-fluid text-center text-dark mt-5">
     <h1>Just Due It - Teacher Dashboard</h1>
   
@@ -42,9 +43,41 @@
       
   
     <div class="mt-5 d-flex justify-content-center gap-3">
-      <button class="btn btn-custom">➕ Add Assignment</button>
-      <button class="btn btn-custom">View Class Student Progress</button>
-      <button class="btn btn-custom">⚙️ Settings</button>
+      <button class="btn btn-custom" (click)="toggleIsAddingCourse()">➕ Add Course</button>
     </div>
   </div>
-  
+}
+
+@if(isAddingCourse()){
+  <div class="d-flex justify-content-center vh-100">
+  <div class="card card-body">
+    <h3>Create a Course</h3>
+    <form (ngSubmit)="createCourse()">
+      <div class="mb-3">
+        <label for="courseTitle" class="form-label">Course Title: </label>
+        <input
+          type="text"
+          id="courseTitle"
+          [(ngModel)]="newCourse.title"
+          name="title"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="courseDescription" class="form-label">Course Description: </label>
+        <input
+          type="text"
+          id="courseDescription"
+          [(ngModel)]="newCourse.description"
+          name="description"
+          class="form-control"
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-primary" (click)="toggleIsAddingCourse()">Save</button>
+        <button type="button" class="btn btn-secondary" (click)="toggleIsAddingCourse()">Cancel</button>
+      </form>
+    </div>
+  </div>
+}
