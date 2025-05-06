@@ -1,8 +1,27 @@
 @if(!isAddingCourse()){
 <div class="container-fluid text-center text-dark mt-5">
-    <h1>Just Due It - Teacher Dashboard</h1>
+  <h1>Just Due It - Teacher Dashboard</h1>
   
-    <div class="row mt-4">
+  <div class="container mt-5">
+    <div class="row">
+      @for (course of teacherCourses; track $index) {
+      <div class="col-12 col-md-6 col-lg-3 mb-4">
+        <div
+          class="card h-100"
+          (click)="goToCourse(course.id)"
+          style="cursor: pointer"
+        >
+          <div class="card-body text-center mt-5 mb-5">
+            <h5 class="card-title">{{ course.title }}</h5>
+            <p class="card-text">{{ course.students?.length }} students</p>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+
+  <!-- <div class="row mt-4">
 
         <div class="col-6">
           <div class="info-box">
@@ -40,16 +59,16 @@
         </div>
       
       </div>
-      
-  
-    <div class="mt-5 d-flex justify-content-center gap-3">
-      <button class="btn btn-custom" (click)="toggleIsAddingCourse()">➕ Add Course</button>
-    </div>
-  </div>
-}
+       -->
 
-@if(isAddingCourse()){
-  <div class="d-flex justify-content-center vh-100">
+  <div class="mt-5 d-flex justify-content-center gap-3">
+    <button class="btn btn-custom" (click)="toggleIsAddingCourse()">
+      ➕ Add Course
+    </button>
+  </div>
+</div>
+} @if(isAddingCourse()){
+<div class="d-flex justify-content-center vh-100">
   <div class="card card-body">
     <h3>Create a Course</h3>
     <form (ngSubmit)="createCourse()">
@@ -65,7 +84,9 @@
         />
       </div>
       <div class="mb-3">
-        <label for="courseDescription" class="form-label">Course Description: </label>
+        <label for="courseDescription" class="form-label"
+          >Course Description:
+        </label>
         <input
           type="text"
           id="courseDescription"
@@ -75,9 +96,21 @@
           required
         />
       </div>
-      <button type="submit" class="btn btn-primary" (click)="toggleIsAddingCourse()">Save</button>
-        <button type="button" class="btn btn-secondary" (click)="toggleIsAddingCourse()">Cancel</button>
-      </form>
-    </div>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        (click)="toggleIsAddingCourse()"
+      >
+        Save
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="toggleIsAddingCourse()"
+      >
+        Cancel
+      </button>
+    </form>
   </div>
+</div>
 }
