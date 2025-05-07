@@ -1,6 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { Firestore, collection, collectionData, doc, setDoc } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 export interface ScheduleEvent {
+  id: string;
   title: string;
   day: string;             
   startTime: string;       
@@ -15,14 +18,22 @@ export interface ScheduleEvent {
   providedIn: 'root',
 })
 export class EventService {
-  private events: ScheduleEvent[] = [];
+  //private events: ScheduleEvent[] = [];
 
-  getEvents(): ScheduleEvent[] {
-    return this.events;
+  constructor() {}
+
+  private firestore = inject(Firestore)
+  private eventsCollection = collection(this.firestore, 'events');
+
+  getEvents(): Observable<ScheduleEvent[]> {
+    return collectionData(this.eventsCollection, ({idField: 'id'})) as Observable<ScheduleEvent[]>
   }
 
-  addEvent(event: ScheduleEvent) {
-    this.events.push(event);
+  addEvent(newEvent: ScheduleEvent) {
+    const eventRef = doc(this.eventsCollection)
+    const newId = eventRef.id;
+    newEvent.id = newId;
+    setDoc(eventRef, newEvent)
   }
 
   deleteEvent(event: ScheduleEvent) {

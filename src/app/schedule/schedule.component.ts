@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { EventService, ScheduleEvent,  } from '../event.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'schedule',
@@ -73,14 +74,14 @@ export class ScheduleComponent implements OnInit {
     };
   }
 
-  editEvent(event: ScheduleEvent) {
-    const newTitle = prompt('Edit title:', event.title);
-    if (newTitle) {
-      const updated = { ...event, title: newTitle };
-      this.eventService.updateEvent(event, updated);
-      this.events = this.eventService.getEvents();
-    }
-  }
+  // editEvent(event: ScheduleEvent) {
+  //   const newTitle = prompt('Edit title:', event.title);
+  //   if (newTitle) {
+  //     const updated = { ...event, title: newTitle };
+  //     this.eventService.updateEvent(event, updated);
+  //     this.events = this.eventService.getEvents();
+  //   }
+  // }
 
 
   navigateToPrevWeek() {

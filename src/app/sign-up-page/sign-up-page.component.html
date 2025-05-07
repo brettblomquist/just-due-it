@@ -2,25 +2,53 @@
   <div class="card p-4 container-color">
     <h3 class="text-center mb-4">Sign Up</h3>
     <div class="formgroup mb-3">
-      <label>Username:</label>
-      <input type="text" class="form-control" placeholder="Enter Username" />
+      <label>First Name:</label>
+      <input type="text" class="form-control" [(ngModel)]="user.fname" placeholder="Enter First Name" />
+    </div>
+    <div class="formgroup mb-3">
+      <label>Last Name:</label>
+      <input type="text" class="form-control" [(ngModel)]="user.lname" placeholder="Enter Last Name" />
+    </div>
+    <div class="formgroup mb-3">
+      <label>Email Address:</label>
+      <input type="email" class="form-control" [(ngModel)]="user.email" placeholder="Enter Email Address" />
     </div>
     <div class="formgroup">
       <label>Password:</label>
       <input
         type="password"
-        class="form-control"
+        class="form-control" [(ngModel)]="user.password"
         placeholder="Enter Password"
       />
     </div>
-    <button class="btn btn-primary w-100 mt-2">Sign Up</button>
+    <div class="mt-2">
+      <div class="form-check">
+        <input
+          type="radio"
+          class="form-check-input"
+          id="radio1"
+          name="role"
+          value="student"
+          (click)="selectRole('student')"
+        />I am a student
+        <label class="form-check-label"></label>
+      </div>
+      <div class="form-check">
+        <input
+          type="radio"
+          class="form-check-input"
+          name="role"
+          value="teacher"
+          (click)="selectRole('teacher')"
+        />I am a teacher
+        <label class="form-check-label"></label>
+      </div>
+    </div>
+    <button class="btn btn-primary w-100 mt-2" (click)="signUp()">Sign Up</button>
     <hr />
     <div class="text-center">
       <p>Existing User?</p>
-      <button
-        routerLink=""
-        class="btn btn-primary w-75 align-self-center"
-      >
+      <button routerLink="" class="btn btn-primary w-75 align-self-center">
         Sign In
       </button>
     </div>

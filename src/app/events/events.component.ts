@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { EventService, ScheduleEvent} from '../event.service';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 
 @Component({
   selector: 'events',
@@ -12,6 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class EventsComponent {
   newEvent: ScheduleEvent = {
+    id: '',
     title: '',
     day: 'Mon',
     startTime: '08:00',
@@ -20,12 +22,20 @@ export class EventsComponent {
     
   };
 
+  private firestore = inject(Firestore);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  createEvent = signal(false);
+
+  private eventService = inject(EventService)
+
   events: ScheduleEvent[] = [];
 
-  constructor(private eventService: EventService) {}
+  //constructor(private eventService: EventService) {}
 
   ngOnInit(): void {
-    this.events = this.eventService.getEvents();
+    //this.events = this.eventService.getEvents();
+    const eventsCollection = collection(this.firestore)
   }
 
   addEvent(): void {
@@ -34,6 +44,7 @@ export class EventsComponent {
 
     
     this.newEvent = {
+      id: '',
       title: '',
       day: 'Mon',
       startTime: '08:00',
