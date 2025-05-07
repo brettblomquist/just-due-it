@@ -16,6 +16,8 @@ private authService = inject(AuthService);
 private router = inject(Router);
 isAddingCourse = signal(false);
 teacherCourses: any[] = [];
+fname: string = '';
+user: any = null;
 
 newCourse = { title: '', description: ''};
 joinCode: string | null = null;
@@ -23,12 +25,20 @@ joinCode: string | null = null;
 ngOnInit(): void {
   this.authService.user$.subscribe((user) => {
     const teacherId = user?.uid;
+    this.user = user;
+    if (this.user?.displayName){
+      this.fname = this.user.displayName.split(' ')[0];
+    }
     const coursesCollection = collection(this.firestore, 'courses');
     const teacherCoursesQuery = query(coursesCollection, where('teacherId', '==', teacherId));
     collectionData(teacherCoursesQuery, {idField: 'id'}).subscribe((courses) => {
       this.teacherCourses = courses;
     })
 })
+}
+
+logout(): void {
+  this.authService.logout();
 }
 
 toggleIsAddingCourse(): void{
@@ -57,4 +67,6 @@ createCourse() {
     })
   })
 }
+
+
 }
