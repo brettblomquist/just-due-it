@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { EventService, ScheduleEvent,  } from '../event.service';
 
 @Component({
   selector: 'schedule',
@@ -11,25 +12,76 @@ import { RouterLink } from '@angular/router';
 export class ScheduleComponent implements OnInit {
   daysOfWeek: string[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   timeSlots: string[] = [];
-  events: any[] = [];
+  //events: any[] = [];
   currentDate: Date = new Date();
+  events: ScheduleEvent[]= [];
+
+  constructor(private eventService: EventService){}
 
   ngOnInit(): void {
     this.generateTimeSlots();
+    this.events = this.eventService.getEvents();
   }
 
   generateTimeSlots(): void {
-    const startTime = 8; // 8:00 AM
-    const endTime = 20; // 8:00 PM
-    const increment = 30; // in minutes
-
-    for (let hour = startTime; hour <= endTime; hour++) {
+    const startTime = 8;
+    const endTime = 20;
+    const increment = 30;
+  
+    for (let hour = startTime; hour < endTime; hour++) {
       for (let minute = 0; minute < 60; minute += increment) {
-        let time = `${hour}:${minute === 0 ? '00' : minute}`;
-        this.timeSlots.push(time);
+        const h = hour.toString().padStart(2, '0');
+        const m = minute.toString().padStart(2, '0');
+        this.timeSlots.push(`${h}:${m}`);
       }
     }
   }
+
+  getEventsForTimeAndDay(time: string, day: string): ScheduleEvent[] {
+    return this.events.filter(event =>
+      event.day === day && event.startTime === time
+    );
+  }
+
+  getEventsForDay(day: string): ScheduleEvent[] {
+    return this.events.filter(event => event.day === day);
+  }
+  
+
+  getEventStyle(event: ScheduleEvent): any {
+    const [startHour, startMinute] = event.startTime.split(':').map(Number);
+    const [endHour, endMinute] = event.endTime.split(':').map(Number);
+    const startMinutes = (startHour * 60 + startMinute);
+    const endMinutes = (endHour * 60 + endMinute);
+    const durationMins = endMinutes - startMinutes;
+  
+    const calendarStartMinutes = 8 * 60; 
+    const topOffset = (startMinutes - calendarStartMinutes) / 30 * 60; 
+    const height = (durationMins / 30) * 50;
+  
+    return {
+      top: `${topOffset}px`,
+      height: `${height}px`,
+      backgroundColor: '#007bff',
+      color: '#fff',
+      padding: '2px 6px',
+      borderRadius: '10px',
+      fontSize: '0.75rem',
+      overflow: 'hidden',
+      marginLeft: '4px',
+      marginRight: '4px',
+    };
+  }
+
+  editEvent(event: ScheduleEvent) {
+    const newTitle = prompt('Edit title:', event.title);
+    if (newTitle) {
+      const updated = { ...event, title: newTitle };
+      this.eventService.updateEvent(event, updated);
+      this.events = this.eventService.getEvents();
+    }
+  }
+
 
   navigateToPrevWeek() {
     const currentWeekStart = this.getWeekStartDate();
@@ -46,7 +98,7 @@ export class ScheduleComponent implements OnInit {
   getWeekStartDate(): Date {
     const date = new Date(this.currentDate);
     const day = date.getDay();
-    const diff = date.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+    const diff = date.getDate() - day + (day == 0 ? -6 : 1); 
     date.setDate(diff);
     return date;
   }
@@ -58,32 +110,8 @@ export class ScheduleComponent implements OnInit {
     return `${startOfWeek.toLocaleDateString()} - ${endOfWeek.toLocaleDateString()}`;
   }
 
-  getEventsForTime(time: string): any[] {
-    return this.events.filter((event) => event.time === time);
-  }
 
-  addEvent(time: string, day: string) {
-    const eventTitle = prompt('Enter event title:');
-    const isRecurring = confirm('Is this a recurring event?');
-    if (eventTitle) {
-      const newEvent = {
-        title: eventTitle,
-        time: time,
-        day: day,
-        date: new Date(this.currentDate),
-        recurring: isRecurring,
-      };
-      this.events.push(newEvent);
-    }
-  }
-
-  editEvent(event: any) {
-    const newTitle = prompt('Edit event title:', event.title);
-    if (newTitle !== null) {
-      event.title = newTitle;
-    }
-  }
-
+  
   getWeekEndDate(): Date {
     const startOfWeek = this.getWeekStartDate();
     const endOfWeek = new Date(startOfWeek);
@@ -91,10 +119,5 @@ export class ScheduleComponent implements OnInit {
     return endOfWeek;
   }
 
-  getEventsForTimeAndDay(time: string, day: string): any[] {
-    return this.events.filter(
-      (event) =>
-        event.time === time && event.day === day && event.date >= this.getWeekStartDate() && event.date <= this.getWeekEndDate()
-    );
-  }
+  
 }

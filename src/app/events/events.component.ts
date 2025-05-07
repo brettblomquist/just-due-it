@@ -1,72 +1,58 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component } from '@angular/core';
+import { EventService, ScheduleEvent} from '../event.service';
 import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-events',
-  imports: [RouterLink, FormsModule, CommonModule],
+  selector: 'events',
   templateUrl: './events.component.html',
-  styleUrl: './events.component.css'
+  styleUrls: ['./events.component.css'],
+  imports: [RouterLink, FormsModule, CommonModule]
 })
-export class EventsComponent implements OnInit {
-  events: any[] = [];
-  daysOfWeek: string[] = ['Monday', 'Tuesday', 'Wednsday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
-  newEvent = {
+export class EventsComponent {
+  newEvent: ScheduleEvent = {
     title: '',
-    day: '',
-    startTime: '',
-    endTime: '',
+    day: 'Mon',
+    startTime: '08:00',
+    endTime: '08:30',
     recurring: false,
+    
   };
 
+  events: ScheduleEvent[] = [];
+
+  constructor(private eventService: EventService) {}
+
   ngOnInit(): void {
-    this.events = JSON.parse(localStorage.getItem('events') || '[]');
+    this.events = this.eventService.getEvents();
   }
 
-  addEvent() {
-    if (
-      !this.newEvent.title ||
-      !this.newEvent.day ||
-      !this.newEvent.startTime ||
-      !this.newEvent.endTime
-    ) {
-      alert('Please fill in all required fields.');
-      return;
-    }
-  
-    const eventToAdd = {
-      ...this.newEvent,
-      date: new Date(),
-    };
-  
-    this.events.push(eventToAdd);
-    this.saveEvents();
-  
+  addEvent(): void {
+    this.eventService.addEvent({ ...this.newEvent });
+    this.events = this.eventService.getEvents();
+
+    
     this.newEvent = {
       title: '',
-      day: '',
-      startTime: '',
-      endTime: '',
-      recurring: false,
+      day: 'Mon',
+      startTime: '08:00',
+      endTime: '08:30',
+      recurring: false
     };
   }
 
-  editEvent(event: any) {
-    const newTitle = prompt('Edit event title:', event.title);
-    if (newTitle !== null) {
-      event.title = newTitle;
-      this.saveEvents();
-    }
+  deleteEvent(event: ScheduleEvent): void {
+    this.eventService.deleteEvent(event);
+    this.events = this.eventService.getEvents();
   }
 
-  deleteEvent(event: any) {
-    this.events = this.events.filter((e) => e !== event);
-    this.saveEvents();
-  }
-
-  saveEvents() {
-    localStorage.setItem('events', JSON.stringify(this.events));
-  }
+//   editEvent(event: ScheduleEvent): void {
+//     const updatedTitle = prompt('Edit title', event.title);
+//     if (updatedTitle) {
+//       const updatedEvent = { ...event, title: updatedTitle };
+//       this.eventService.updateEvent(event, updatedEvent);
+//       this.events = this.eventService.getEvents();
+//     }
+//   }
 }
