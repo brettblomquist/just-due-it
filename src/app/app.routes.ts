@@ -3,9 +3,6 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpPageComponent } from './sign-up-page/sign-up-page.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { EventsComponent } from './events/events.component';
-
-
-export const routes: Routes = [
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component'; 
 import { HomeComponent } from './home/home.component';
 import { TeacherDashboardComponent } from './teacher-dashboard/teacher-dashboard.component';
@@ -60,8 +57,16 @@ export const routes: Routes = [
     component: AssignmentPageComponent,
     title: 'Assignment'
   },
-     {path: 'schedule', component: ScheduleComponent, title: 'Schedule'},
-    {path: 'event-editor', component: EventsComponent, title: 'Events'}
+  {
+    path: 'schedule/:userId', 
+    component: ScheduleComponent, 
+    title: 'Schedule'
+  },
+  {
+    path: 'event-editor', 
+    component: EventsComponent, 
+    title: 'Events'
+  }
 
   
 

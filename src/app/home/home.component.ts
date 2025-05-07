@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -8,7 +8,7 @@ import { Firestore, query, where, collection, collectionData, doc, addDoc, getDo
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
   })
@@ -16,6 +16,7 @@ export class HomeComponent {
   private authService = inject(AuthService);
   private firestore = inject(Firestore);
   private router = inject(Router);
+  scheduleId: string | null = null;
   fname: string = '';
   user: any = null;
   courses: any[] = [];
@@ -41,6 +42,19 @@ export class HomeComponent {
     }
 
     if (this.user?.uid) {
+      const scheduleCollection = collection(this.firestore, `users/${this.user.uid}/schedule`);
+      getDocs(scheduleCollection).then((snapshot) => {
+        if (snapshot.empty) {
+          addDoc(scheduleCollection, {
+            title: '',
+            startTime: '',
+            endTime: '',
+            day: '',
+            recurring: '',
+          })
+        }
+      })
+
       const coursesCollection = collection(this.firestore, `users/${this.user.uid}/courses`);
       collectionData(coursesCollection, { idField: 'id' }).subscribe((courses) => {
         this.courses = courses;
