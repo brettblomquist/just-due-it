@@ -1,0 +1,52 @@
+<div class="header">
+    <h2>Users:</h2>
+    <div class="button-group">
+      <button class="btn logout-btn" (click)="logout()">Log Out</button>
+    </div>
+  </div>
+  
+  <div class="table-container">
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Student ID</th>
+          <th>Email Address</th>
+          <th>Phone Number</th>
+          <th>Manage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; let i = index">
+          <td>{{ user.name }}</td>
+          <td>{{ user.studentId }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.phone }}</td>
+          <td>
+            <button class="manage-btn">View Courses</button>
+            <button class="manage-btn" (click)="openEditModal(i)">Edit User</button>
+            <button class="manage-btn remove" (click)="removeUser(i)">Remove User</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div class="modal" *ngIf="showEditModal">
+    <div class="modal-content">
+      <h3>Edit User</h3>
+      <label>Name:</label>
+      <input [(ngModel)]="editedUser.name" type="text">
+      <label>Student ID:</label>
+      <input [(ngModel)]="editedUser.studentId" type="text">
+      <label>Email:</label>
+      <input [(ngModel)]="editedUser.email" type="email">
+      <label>Phone:</label>
+      <input [(ngModel)]="editedUser.phone" type="text">
+      <div class="modal-buttons">
+        <button (click)="saveEdit()">Save</button>
+        <button (click)="showEditModal = false">Cancel</button>
+      </div>
+    </div>
+  </div>
+  

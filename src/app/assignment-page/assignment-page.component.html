@@ -1,0 +1,13 @@
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card w-50 shadow">
+      <div class="card-body">
+        <h1 class="card-title text-center mb-5">{{ assignment?.title }}</h1>
+        <p class="card-text"><strong>Description:</strong> {{ assignment?.description }}</p>
+        <p class="card-text"><strong>Due Date:</strong> {{ assignment?.dueDate | date: 'longDate' }}</p>
+      </div>
+      <div class="card-footer text-center">
+        <button class="btn btn-danger me-2" (click)="deleteAssignment()">Delete Assignment</button>
+        <button class="btn btn-primary" (click)="cancelDelete()">Go Back</button>
+      </div>
+    </div>
+  </div>

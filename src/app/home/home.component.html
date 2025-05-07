@@ -1,0 +1,53 @@
+@if (!isAddingCourse()){
+
+  <div class="header align-items-center">
+    <h1>Hello, {{ fname }}!</h1>
+    <button class="btn btn-danger" (click)="logout()">Logout</button>
+  </div>
+
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center">
+    <h3>Courses</h3>
+    <button
+      class="btn btn-info" (click)="toggleAddCourseView()"
+    >
+      Add Course
+    </button>
+  </div>
+
+  
+
+  <div class="row">
+    @for (course of courses; track $index) {
+    <div class="col-12 col-md-6 col-lg-3 mb-4">
+      <div class="card h-100" (click)="goToCourse(course.id)" style="cursor: pointer;">
+        <div class="card-body text-center mt-5 mb-5">
+          <h5 class="card-title">{{ course.title }}</h5>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>
+}
+
+@if (isAddingCourse()){
+  <div class="card card-body">
+    <h3>Add a Course</h3>
+    <form (ngSubmit)="addCourse()">
+      <div class="mb-3">
+        <label for="courseCode" class="form-label">Course Code:</label>
+        <input
+          type="text"
+          id="courseCode"
+          [(ngModel)]="courseCode"
+          name="courseCode"
+          class="form-control"
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-primary" (click)="toggleAddCourseView()">Save</button>
+        <button type="button" class="btn btn-secondary" (click)="toggleAddCourseView()">Cancel</button>
+      </form>
+    </div>
+}
