@@ -1,0 +1,102 @@
+@if (!createAssignment()){
+<div class="container-fluid header-color">
+  <nav class="navbar navbar-expand-lg header-color">
+    <div class="container-fluid">
+      <div class="navbar-brand">
+        <h1 class="mb=0">{{ course?.title}}</h1>
+        <p class="mb=0">{{ course?.description }}</p>
+        <p class="mb=0"><strong>Join Code: </strong>{{ course?.code }}</p>
+      </div>
+      <div class="d-flex">
+        <button class="btn btn-primary" (click)="backToCourses()">Back to Courses</button>
+      </div>
+    </div>
+  </nav>
+</div>
+
+  <h3>Current Assignments</h3>
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Due Date</th>
+          <th>Manage</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for(assignment of assignments; track $index){
+        <tr>
+          <td>
+            <a [routerLink]="['/courses', course.id, 'assignments', assignment.id]" class="text-decoration-none">
+            {{ assignment.title }}
+            </a>
+          </td>
+          <td>{{ assignment.dueDate | date: 'longDate' }}</td>
+        </tr>
+      }
+      </tbody>
+    </table>
+  </div>
+  <button class="btn btn-primary ms-2 me-2" (click)="toggleCreateAssignment()">
+    Create Assignment
+  </button>
+  <button class="btn btn-secondary">View Student List</button>
+} @if(createAssignment()){
+<div class="container">
+  <div class="card mx-auto w-50 mt-5 header-color">
+    <h3 class="ms-2 mt-2">Create an Assignment</h3>
+    <form (ngSubmit)="createNewAssignment()" class="ms-2">
+      <div class="mb-3 me-2">
+        <label for="courseTitle" class="form-label">Assignment Title: </label>
+        <input
+          type="text"
+          id="assignmentTitle"
+          [(ngModel)]="newAssignment.title"
+          name="title"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="mb-3 me-2">
+        <label for="assignmentDescription" class="form-label"
+          >Assignment Description/Instructions:
+        </label>
+        <input
+          type="text"
+          id="assignmentDescription"
+          [(ngModel)]="newAssignment.description"
+          name="description"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="mb-3 me-2">
+        <label for="dueDate" class="form-label">Due Date: </label>
+        <input
+          type="date"
+          id="dueDate"
+          [(ngModel)]="newAssignment.dueDate"
+          name="dueDate"
+          class="form-control"
+          required
+        />
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary ms-2 mb-3"
+        (click)="toggleCreateAssignment()"
+      >
+        Save
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary ms-2 mb-3"
+        (click)="toggleCreateAssignment()"
+      >
+        Cancel
+      </button>
+    </form>
+  </div>
+</div>
+}

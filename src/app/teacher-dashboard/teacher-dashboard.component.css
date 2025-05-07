@@ -33,7 +33,7 @@ h1 {
 
 
 .btn-custom {
-    background-color: #d4edda;
+    background-color: #a1c5f0;
     color: black;
     border: none;
     padding: 10px 20px;
@@ -44,11 +44,31 @@ h1 {
 
 
 .btn-custom:hover {
-    background-color: #c3e6cb;
+    background-color: #62acf7;
 }
 
 .col-6 {
     padding: 20px;
     display: flex;
     align-items: stretch;
+}
+
+.header {
+    background: linear-gradient(to bottom, #a1c5f0, #62acf7);
+    color: black;
+    padding: 20px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.course-card{
+    background-color: rgb(156, 195, 247);
+}
+
+.container-color{
+    background: linear-gradient(to bottom, #a1c5f0, #62acf7);
 }

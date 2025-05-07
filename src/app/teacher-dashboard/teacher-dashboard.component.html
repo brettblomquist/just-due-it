@@ -1,50 +1,79 @@
+@if(!isAddingCourse()){
+  <div class="header align-items-center">
+    <h1>Hello, {{ fname }}!</h1>
+    <button class="btn btn-danger" (click)="logout()">Logout</button>
+    </div>
 <div class="container-fluid text-center text-dark mt-5">
-    <h1>Just Due It - Teacher Dashboard</h1>
-  
-    <div class="row mt-4">
-
-        <div class="col-6">
-          <div class="info-box">
-            <p>Class: Class2</p>
-            <p>Student: 19</p>
-            <p>Assignment: 3 Active</p>
-            <p>【view process】</p>
+  <div class="container mt-5">
+    <div class="row">
+      @for (course of teacherCourses; track $index) {
+      <div class="col-12 col-md-6 col-lg-3 mb-4">
+        <div
+          class="card h-100 border-dark course-card"
+          (click)="goToCourse(course.id)"
+          style="cursor: pointer"
+        >
+          <div class="card-body text-center mt-5 mb-5">
+            <h5 class="card-title">{{ course.title }}</h5>
+            <p class="card-text">{{ course.students?.length }} students</p>
+            <p class="card-text">Join Code: {{ course.code }}</p>
           </div>
         </div>
-      
-        <div class="col-6">
-          <div class="info-box">
-            <p>Class: Class3</p>
-            <p>Student: 24</p>
-            <p>Assignment: 2 Active</p>
-            <p>【view process】</p>
-          </div>
-        </div>
-      
-        <div class="col-6">
-          <div class="info-box">
-            <p>Recently Activity:</p>
-            <p>Class 3 Ben submit Assignment 2!</p>
-            <p>Class 2 Alex submit Assignment 3!</p>
-            <p>Class 3 Cassy submit Assignment 2!</p>
-          </div>
-        </div>
-      
-        <div class="col-6">
-          <div class="info-box">
-            <p>Notification: Late Alert</p>
-            <p>Class 2 Kai missed Assignment 1!</p>
-            <p>Class 2 John missed Assignment 2!</p>
-          </div>
-        </div>
-      
       </div>
-      
-  
-    <div class="mt-5 d-flex justify-content-center gap-3">
-      <button class="btn btn-custom">➕ Add Assignment</button>
-      <button class="btn btn-custom">View Class Student Progress</button>
-      <button class="btn btn-custom">⚙️ Settings</button>
+      }
     </div>
   </div>
-  
+  <div class="mt-5 d-flex justify-content-center gap-3">
+    <button class="btn btn-custom" (click)="toggleIsAddingCourse()">
+      ➕ Add Course
+    </button>
+  </div>
+</div>
+
+} @if(isAddingCourse()){
+<div class="container">
+  <div class="card mx-auto w-50 mt-5 container-color">
+    <h3 class="ms-2 mt-2">Create a Course</h3>
+    <form (ngSubmit)="createCourse()" class="ms-2">
+      <div class="mb-3 me-2">
+        <label for="courseTitle" class="form-label">Course Title: </label>
+        <input
+          type="text"
+          id="courseTitle"
+          [(ngModel)]="newCourse.title"
+          name="title"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="mb-3 me-2">
+        <label for="courseDescription" class="form-label"
+          >Course Description:
+        </label>
+        <input
+          type="text"
+          id="courseDescription"
+          [(ngModel)]="newCourse.description"
+          name="description"
+          class="form-control"
+          required
+        />
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary ms-2 mb-3"
+        (click)="toggleIsAddingCourse()"
+      >
+        Save
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary ms-2 mb-3"
+        (click)="toggleIsAddingCourse()"
+      >
+        Cancel
+      </button>
+    </form>
+  </div>
+</div>
+}
