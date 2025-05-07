@@ -1,5 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AppModule } from '../app.module';
+import { ScheduleComponent } from "../schedule/schedule.component";
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../auth.service';
 

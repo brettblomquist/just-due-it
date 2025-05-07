@@ -1,0 +1,56 @@
+<div class="event-manager-container">
+    <div class="header container">
+        <h2>Manage Events</h2>
+        <button class="btn btn-primary" [routerLink]="['/schedule']">Return to schedule</button>
+    </div>
+    <form (ngSubmit)="addEvent()" class="mb-4">
+        <div class="row g-2 align-items-end">
+          <div class="col-md-3">
+            <label>Title</label>
+            <input class="form-control" [(ngModel)]="newEvent.title" name="title" required>
+          </div>
+    
+          <div class="col-md-2">
+            <label>Day</label>
+            <select class="form-control" [(ngModel)]="newEvent.day" name="day">
+              <option *ngFor="let day of ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']">{{ day }}</option>
+            </select>
+          </div>
+    
+          <div class="col-md-2">
+            <label>Start Time</label>
+            <input type="time" class="form-control" [(ngModel)]="newEvent.startTime" name="startTime" required>
+          </div>
+    
+          <div class="col-md-2">
+            <label>End Time</label>
+            <input type="time" class="form-control" [(ngModel)]="newEvent.endTime" name="endTime" required>
+          </div>
+    
+          <div class="col-md-2">
+            <label>Recurring</label>
+            <input type="checkbox" class="form-check-input ms-2" [(ngModel)]="newEvent.recurring" name="recurring">
+          </div>
+    
+          <div class="col-md-1">
+            <button type="submit" class="btn btn-primary w-100">Add</button>
+          </div>
+        </div>
+      </form>
+    
+      <div *ngIf="events.length > 0">
+        <h4>Current Events</h4>
+        <ul class="list-group">
+          <li *ngFor="let event of events" class="list-group-item d-flex justify-content-between align-items-center">
+            <span>
+              {{ event.title }} - {{ event.day }} ({{ event.startTime }} - {{ event.endTime }})
+              <span *ngIf="event.recurring" class="badge bg-info ms-2">Recurring</span>
+            </span>
+            <div>
+              <!-- <button class="btn btn-sm btn-outline-secondary me-2" (click)="editEvent(event)">Edit</button> -->
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteEvent(event)">Delete</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+  </div>

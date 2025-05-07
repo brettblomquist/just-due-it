@@ -5,6 +5,7 @@ import { User, UserService } from './user.service';
 import { FormsModule } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
+
 @Component({
   selector: 'app-root',
   imports: [SignInComponent, RouterLink, RouterModule, FormsModule],
