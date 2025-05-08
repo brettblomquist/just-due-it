@@ -74,7 +74,7 @@ export class EventsComponent {
     const userId = user.uid;
     const eventDocRef = doc(this.fireStore, `users/${userId}/schedule/${event.id}`)
     deleteDoc(eventDocRef).then(() => {
-      this.events = this.events.filter((e) => e.id !== event.id);
+      this.events = this.events.filter((tempEvent) => tempEvent.id !== event.id);
     })
   }
 

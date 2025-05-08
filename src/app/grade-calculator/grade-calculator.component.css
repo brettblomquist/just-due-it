@@ -1,0 +1,17 @@
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  table {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  input {
+    text-align: center;
+  }
+
+  .header-color{
+    background: linear-gradient(to bottom, #a1c5f0, #62acf7);
+  }
