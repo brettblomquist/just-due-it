@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 export interface ScheduleEvent {
+  id?: string,
   title: string;
   day: string;             
   startTime: string;       
