@@ -2,6 +2,7 @@
     background: linear-gradient(to bottom, #a1c5f0, #62acf7);
 }
 
+
 .schedule-color{
     background: rgb(250, 250, 153);
 }
@@ -12,4 +13,20 @@
 
 .course-color{
     background: rgb(242, 140, 140);
+
+.sidenav {
+    height: 100%;
+    width: 90px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: #ddd;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.main {
+    margin-right: 90px;
+    
 }
