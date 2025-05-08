@@ -72,8 +72,6 @@ export const routes: Routes = [
     path: 'grade-calculator',
     component: GradeCalculatorComponent,
     title: 'Grade Calculator'
-  }
-
-  
+  }, 
 
 ];
