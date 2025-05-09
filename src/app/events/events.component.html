@@ -1,6 +1,6 @@
 <div class="sidenav">
   <div routerLink="home" class="icon-1">
-    <button class="btn btn-secondary">
+    <button class="btn btn-secondary" [routerLink]="['/home']">
       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-house-door-fill"
         viewBox="0 0 16 16">
         <path
@@ -9,7 +9,7 @@
     </button>
   </div>
   <div routerLink="schedule" class="icon-2">
-    <button class="btn btn-secondary">
+    <button class="btn btn-secondary" [routerLink]="['/schedule/${user.id}', ]">
       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
         class="bi bi-calendar-event-fill" viewBox="0 0 16 16">
         <path
