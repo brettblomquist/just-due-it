@@ -21,7 +21,7 @@
 </div>
 <div style="display: flex; align-items: flex-start; gap: 45px;">
   <div class="course-info">
-    <div class="course-header card" style="width: 450px; align-items: center;">
+    <div class="course-header card header-color" style="width: 450px; align-items: center;">
       <h1 class="card-title">{{ course?.title }}</h1>
       <p class="card-body">{{ course?.description }}</p>
     </div>
@@ -30,7 +30,8 @@
       <ul>
         @for(assignment of assignments; track $index){
         <li>
-          <p>{{assignment.title}}</p>
+          <p>{{assignment.title}} - Due: {{ assignment.dueDate }}</p>
+          
         </li>
         }
       </ul>
