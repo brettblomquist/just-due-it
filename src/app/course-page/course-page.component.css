@@ -46,7 +46,15 @@
     padding-left: 15px;
 }
 
-.main{
-    padding-right: 90px;
+.grade-calc{
+    background: rgb(249, 176, 176);
 }
+
+.assignment-card {
+    background: rgb(248, 248, 160);
+}
+
+/* .main {
+    padding-right: 50px;
+} */
 
