@@ -45,7 +45,7 @@
           <div *ngFor="let day of daysOfWeek" class="day-column position-relative">
             <span>{{ day }}</span>
             <!-- <div class="event-thing"> -->
-              <div *ngFor="let event of getEventsForDay(day)" class="event position-absolute" style="padding-top: 27px;"
+              <div *ngFor="let event of getEventsForDay(day)" class="event position-absolute" 
                 [ngStyle]="getEventStyle(event)">
                 {{ event.title }}
               </div>
