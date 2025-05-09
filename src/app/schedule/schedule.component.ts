@@ -73,7 +73,7 @@ export class ScheduleComponent implements OnInit {
     const durationMins = endMinutes - startMinutes;
   
     const calendarStartMinutes = 8 * 60; 
-    const topOffset = (startMinutes - calendarStartMinutes) / 30 * 60; 
+    const topOffset = (startMinutes - calendarStartMinutes) / 30 * 60 +27; 
     const height = (durationMins / 30) * 50;
   
     return {
