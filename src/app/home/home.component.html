@@ -1,8 +1,9 @@
 <div class="sidenav">
   <div class="icon-1">
     <button class="btn btn-secondary">
-      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-fill"
+        viewBox="0 0 16 16">
+        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
       </svg>
     </button>
   </div>
@@ -25,94 +26,51 @@
   <div class="container mt-5">
     <div class="row">
       <div class="col-md-6">
-        <div
-          class="card h-100 schedule-color"
-          style="cursor: pointer"
-          [routerLink]="['/schedule', user?.uid]"
-        >
+        <div class="card h-100 schedule-color" style="cursor: pointer; height: 300px;"
+          [routerLink]="['/schedule', user?.uid]">
           <div class="card-body text-center mt-5 mb-5">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-calendar-event-fill"
-              viewBox="0 0 16 16"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-calendar-event-fill" viewBox="0 0 16 16">
               <path
-                d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2m-3.5-7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5"
-              />
+                d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2m-3.5-7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5" />
             </svg>
             <h5 class="card-title">Schedule</h5>
           </div>
         </div>
       </div>
-      <div class="col-md-6">
-        <div
-          class="card h-100 calculator-color"
-          style="cursor: pointer"
-          [routerLink]="['/grade-calculator']"
-        >
-          <div class="card-body text-center mt-5 mb-5">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-calculator-fill"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zm2 .5v2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0-.5.5m0 4v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5M4.5 9a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 12.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5M7.5 6a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM7 9.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5m.5 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM10 6.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5m.5 2.5a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 0-.5-.5z"
-              />
+
+
+      <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center">
+          <h3>Courses</h3>
+          <button class="btn btn-info" (click)="toggleAddCourseView()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
+              viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
             </svg>
-            <h5 class="card-title">Grade Calculator</h5>
-          </div>
+            Add Course
+          </button>
         </div>
 
-        <div class="container mt-5">
-          <div class="d-flex justify-content-between align-items-center">
-            <h3>Courses</h3>
-            <button class="btn btn-info" (click)="toggleAddCourseView()">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-plus-lg"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
-                />
-              </svg>
-              Add Course
-            </button>
-          </div>
-
-          <div class="row">
-            @for (course of courses; track $index) {
-            <div class="col-12 col-md-6 col-lg-3 mb-4">
-              <div
-                class="card h-100 course-color"
-                (click)="goToCourse(course.id)"
-                style="cursor: pointer"
-              >
-                <div class="card-body text-center mt-5 mb-5">
-                  <h5 class="card-title">{{ course.title }}</h5>
-                  <p class="card-text">{{ course.description }}</p>
-                </div>
+        <div class="row">
+          @for (course of courses; track $index) {
+          <div class="col-12 col-md-6 col-lg-3 mb-4">
+            <div class="card h-100 course-color" (click)="goToCourse(course.id)" style="cursor: pointer">
+              <div class="card-body text-center mt-5 mb-5">
+                <h5 class="card-title">{{ course.title }}</h5>
+                <p class="card-text">{{ course.description }}</p>
               </div>
             </div>
-            }
           </div>
+          }
         </div>
       </div>
     </div>
   </div>
-  }
-</div>
+
+}
+
 
 @if (isAddingCourse()){
 <div class="container">
@@ -121,27 +79,12 @@
     <form (ngSubmit)="addCourse()" class="ms-2">
       <div class="mb-3 me-2">
         <label for="courseTitle" class="form-label">Course Code: </label>
-        <input
-          type="text"
-          id="courseCode"
-          [(ngModel)]="courseCode"
-          name="courseCode"
-          class="form-control"
-          required
-        />
+        <input type="text" id="courseCode" [(ngModel)]="courseCode" name="courseCode" class="form-control" required />
       </div>
-      <button
-        type="submit"
-        class="btn btn-primary ms-2 mb-3"
-        (click)="toggleAddCourseView()"
-      >
+      <button type="submit" class="btn btn-primary ms-2 mb-3" (click)="toggleAddCourseView()">
         Save
       </button>
-      <button
-        type="button"
-        class="btn btn-secondary ms-2 mb-3"
-        (click)="toggleAddCourseView()"
-      >
+      <button type="button" class="btn btn-secondary ms-2 mb-3" (click)="toggleAddCourseView()">
         Cancel
       </button>
     </form>

@@ -9,7 +9,7 @@ import { TeacherDashboardComponent } from './teacher-dashboard/teacher-dashboard
 import { CoursePageComponent } from './course-page/course-page.component';
 import { TeacherCoursePageComponent } from './teacher-course-page/teacher-course-page.component';
 import { AssignmentPageComponent } from './assignment-page/assignment-page.component';
-import { GradeCalculatorComponent } from './grade-calculator/grade-calculator.component';
+
 
 
 export const routes: Routes = [
@@ -68,10 +68,6 @@ export const routes: Routes = [
     component: EventsComponent, 
     title: 'Events'
   },
-  {
-    path: 'grade-calculator',
-    component: GradeCalculatorComponent,
-    title: 'Grade Calculator'
-  }, 
+  
 
 ];
