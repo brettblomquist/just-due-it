@@ -26,11 +26,6 @@ export class GradeCalculatorComponent {
       weightedSum += (category.grade * category.weight) / 100;
       totalWeight += category.weight;
     });
-
-    if (totalWeight > 0) {
-      this.finalGrade = weightedSum;
-    } else {
-      this.finalGrade = 0;
-    }
+    this.finalGrade = weightedSum;
   }
 }

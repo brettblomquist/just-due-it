@@ -7,9 +7,6 @@ export interface ScheduleEvent {
   startTime: string;       
   endTime: string;         
   recurring?: boolean;
-  //course: string;
-  //dueDate: string;
-  //priority: string;
 }
 
 @Injectable({

@@ -15,8 +15,8 @@
     <thead>
       <tr>
         <th>Category</th>
-        <th>Total Grade (%)</th>
         <th>Weight (%)</th>
+        <th>Total Grade (%)</th>
       </tr>
     </thead>
     <tbody>
@@ -25,18 +25,18 @@
         <td>{{ category.name }}</td>
         <td>
           <input
-            type="number"
+            type="weight"
             class="form-control"
-            [(ngModel)]="category.grade"
-            placeholder="Enter grade"
+            [(ngModel)]="category.weight"
+            placeholder="Enter weight"
           />
         </td>
         <td>
           <input
             type="number"
             class="form-control"
-            [(ngModel)]="category.weight"
-            placeholder="Enter weight"
+            [(ngModel)]="category.grade"
+            placeholder="Enter grade"
           />
         </td>
       </tr>
