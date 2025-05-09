@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 
 export interface ScheduleEvent {
+  id?: string,
   title: string;
   day: string;             
   startTime: string;       
   endTime: string;         
   recurring?: boolean;
-  //course: string;
-  //dueDate: string;
-  //priority: string;
 }
 
 @Injectable({

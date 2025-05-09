@@ -16,7 +16,7 @@ export class TeacherCoursePageComponent {
   private firestore = inject(Firestore);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  createAssignment = signal(false)
+  createAssignment = signal(false);
   
   course: any = null;
   assignments: any[] = [];

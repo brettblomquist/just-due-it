@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { EventService, ScheduleEvent,  } from '../event.service';
+import { AuthService } from '../auth.service';
+import { collection, collectionData, Firestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'schedule',
   templateUrl: './schedule.component.html',
   styleUrls: ['./schedule.component.css'],
-  imports: [CommonModule, RouterLink]
+  imports: [CommonModule, RouterLink, RouterModule]
 })
 export class ScheduleComponent implements OnInit {
   daysOfWeek: string[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -16,11 +18,11 @@ export class ScheduleComponent implements OnInit {
   currentDate: Date = new Date();
   events: ScheduleEvent[]= [];
 
-  constructor(private eventService: EventService){}
+  constructor(private eventService: EventService, private authService: AuthService, private fireStore: Firestore, private router: Router){}
 
   ngOnInit(): void {
     this.generateTimeSlots();
-    this.events = this.eventService.getEvents();
+    this.getEventsFromFirebase();
   }
 
   generateTimeSlots(): void {
@@ -35,6 +37,21 @@ export class ScheduleComponent implements OnInit {
         this.timeSlots.push(`${h}:${m}`);
       }
     }
+  }
+
+  getEventsFromFirebase(): void{
+    // const user = this.authService.getUser();
+    this.authService.user$.subscribe((user) => {
+    if (!user){
+      return;
+    }
+
+    const userId = user.uid;
+    const scheduleCollection = collection(this.fireStore, `users/${userId}/schedule`);
+    collectionData(scheduleCollection, { idField: 'id'}).subscribe((data) => {
+      this.events = data as ScheduleEvent[];
+    })
+  })
   }
 
   getEventsForTimeAndDay(time: string, day: string): ScheduleEvent[] {

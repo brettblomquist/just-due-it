@@ -28,7 +28,7 @@
 <div class="event-manager-container">
     <div class="header container">
         <h2>Manage Events</h2>
-        <button class="btn btn-primary" [routerLink]="['/schedule']">Return to schedule</button>
+        <button class="btn btn-primary" (click)="backToSchedule()">Return to schedule</button>
     </div>
     <form (ngSubmit)="addEvent()" class="event-form mb-4">
         <div class="row g-2 align-items-end">

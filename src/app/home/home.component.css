@@ -1,6 +1,20 @@
 .header-color{
     background: linear-gradient(to bottom, #a1c5f0, #62acf7);
 }
+
+
+.schedule-color{
+    background: rgb(250, 250, 153);
+}
+
+.calculator-color{
+    background: rgb(150, 245, 150);
+}
+
+.course-color{
+    background: rgb(242, 140, 140);
+}
+
 .sidenav {
     height: 100%;
     width: 90px;
@@ -8,7 +22,8 @@
     z-index: 1;
     top: 0;
     right: 0;
-    background: linear-gradient(to bottom, #d1d1d1, #dddddd);
+    background-color: #ddd;
+    /* Black */
     overflow-x: hidden;
     padding-top: 20px;
 }
@@ -16,6 +31,10 @@
 .main {
     margin-right: 90px;
     
+}
+
+.container-color{
+    background: linear-gradient(to bottom, #a1c5f0, #62acf7);
 }
 
 .icon-1 {

@@ -1,4 +1,13 @@
+
+.header-color{
+    background: linear-gradient(to bottom, #a1c5f0, #62acf7);
+}
 .sidenav {
+    height: 100%; 
+    width: 90px; 
+    position: fixed; 
+    z-index: 1; 
+    top: 0; 
     height: 100%;
     width: 90px;
     position: fixed;
@@ -29,6 +38,7 @@
 }
 
 .grade-stuff{
+    overflow-x: hidden; 
     padding-top: 20px;
 }
 
