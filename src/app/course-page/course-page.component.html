@@ -19,7 +19,7 @@
   </div>
 
 </div>
-<div style="display: flex; align-items: flex-start; gap: 45px;">
+<div class="main" style="display: flex; align-items: flex-start; gap: 45px;">
   <div class="course-info">
     <div class="course-header card header-color" style="width: 450px; align-items: center;">
       <h1 class="card-title">{{ course?.title }}</h1>
@@ -57,28 +57,28 @@
         <div class="grade-points">
           <h4>Points Recived</h4>
           <p>-</p>
-          <input type="text" class="form-control" [(ngModel)]="earned[0]">
+          <input type="number" class="form-control" [(ngModel)]="earned[0]">
           <p>-</p>
-          <input type="text" class="form-control" [(ngModel)]="earned[1]">
+          <input type="number" class="form-control" [(ngModel)]="earned[1]">
           <p>-</p>
-          <input type="text" class="form-control" [(ngModel)]="earned[2]">
+          <input type="number" class="form-control" [(ngModel)]="earned[2]">
           <p>-</p>
-          <input type="text" class="form-control" [(ngModel)]="earned[3]">
+          <input type="number" class="form-control" [(ngModel)]="earned[3]">
           <p>-</p>
-          <input type="text" class="form-control" [(ngModel)]="earned[4]">
+          <input type="number" class="form-control" [(ngModel)]="earned[4]">
         </div>
         <div class="grade-points-total">
           <h4>Total Points</h4>
           <p>-</p>
-          <input type="text" class="form-control" [(ngModel)]="total[0]">
+          <input type="number" class="form-control" [(ngModel)]="total[0]">
           <p>-</p>
-          <input type="text" class="form-control" [(ngModel)]="total[1]">
+          <input type="number" class="form-control" [(ngModel)]="total[1]">
           <p>-</p>
-          <input type="text" class="form-control" [(ngModel)]="total[2]">
+          <input type="number" class="form-control" [(ngModel)]="total[2]">
           <p>-</p>
-          <input type="text" class="form-control" [(ngModel)]="total[3]">
+          <input type="number" class="form-control" [(ngModel)]="total[3]">
           <p>-</p>
-          <input type="text" class="form-control" [(ngModel)]="total[4]">
+          <input type="number" class="form-control" [(ngModel)]="total[4]">
         </div>
       </div>
       <div style="padding-top: 15px; padding-left: 5px;">
