@@ -1,9 +1,36 @@
+<div class="sidenav">
+  <div routerLink="home" class="icon-1">
+    <button class="btn btn-secondary">
+      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-house-door-fill"
+        viewBox="0 0 16 16">
+        <path
+          d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5" />
+      </svg>
+    </button>
+  </div>
+  <div routerLink="schedule" class="icon-2">
+    <button class="btn btn-secondary">
+      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+        class="bi bi-calendar-event-fill" viewBox="0 0 16 16">
+        <path
+          d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2m-3.5-7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5" />
+      </svg>
+    </button>
+  </div><div class="icon-2">
+    <button class="btn btn-secondary">
+      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+      </svg>
+    </button>
+  </div>
+  
+</div>
 <div class="event-manager-container">
     <div class="header container">
         <h2>Manage Events</h2>
         <button class="btn btn-primary" [routerLink]="['/schedule']">Return to schedule</button>
     </div>
-    <form (ngSubmit)="addEvent()" class="mb-4">
+    <form (ngSubmit)="addEvent()" class="event-form mb-4">
         <div class="row g-2 align-items-end">
           <div class="col-md-3">
             <label>Title</label>

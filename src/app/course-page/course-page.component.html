@@ -1,16 +1,89 @@
-
 <div class="sidenav">
-  <p>test</p>
-</div>
-  
-  <h1>{{ course?.title }}</h1>
-  <p>{{ course?.description }}</p>
+  <div routerLink="home" class="icon-1">
+    <button class="btn btn-secondary">
+      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-house-door-fill"
+        viewBox="0 0 16 16">
+        <path
+          d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5" />
+      </svg>
+    </button>
+  </div>
+  <div routerLink="schedule" class="icon-2">
+    <button class="btn btn-secondary">
+      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+        class="bi bi-calendar-event-fill" viewBox="0 0 16 16">
+        <path
+          d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2m-3.5-7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5" />
+      </svg>
+    </button>
+  </div>
 
-  <h3 class="mt-5">Assignments</h3>
-  <ul>
-    @for(assignment of assignments; track $index){
-    <li>
-        <p>{{assignment.title}}</p>
-    </li>
-    }
-  </ul>
+</div>
+<div style="display: flex; align-items: flex-start; gap: 45px;">
+  <div class="course-info">
+    <div class="course-header card" style="width: 450px; align-items: center;">
+      <h1 class="card-title">{{ course?.title }}</h1>
+      <p class="card-body">{{ course?.description }}</p>
+    </div>
+    <h3 class="mt-5">Assignments</h3>
+    <div class="assignment-card card" style="width: 450px; height: 400px;">
+      <ul>
+        @for(assignment of assignments; track $index){
+        <li>
+          <p>{{assignment.title}}</p>
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+  <div class="grade-stuff">
+    <div class="grade-calc card" style="width: 780px; height: 640px;">
+      <h1 class="card-title" style="padding-left: 5px;">Grade Calculator</h1>
+      <div style="display: flex; align-items: flex-start; gap: 15px;">
+        <div class="grade-percents">
+          <h4>Percentage</h4>
+          <p>Tests</p>
+          <input type="number" class="form-control" [(ngModel)]="weighted[0]">
+          <p>Assignments</p>
+          <input type="number" class="form-control" [(ngModel)]="weighted[1]">
+          <p>Participation</p>
+          <input type="number" class="form-control" [(ngModel)]="weighted[2]">
+          <p>Other 1</p>
+          <input type="number" class="form-control" [(ngModel)]="weighted[3]">
+          <p>Other 2</p>
+          <input type="number" class="form-control" [(ngModel)]="weighted[4]">
+        </div>
+        <div class="grade-points">
+          <h4>Points Recived</h4>
+          <p>-</p>
+          <input type="text" class="form-control" [(ngModel)]="earned[0]">
+          <p>-</p>
+          <input type="text" class="form-control" [(ngModel)]="earned[1]">
+          <p>-</p>
+          <input type="text" class="form-control" [(ngModel)]="earned[2]">
+          <p>-</p>
+          <input type="text" class="form-control" [(ngModel)]="earned[3]">
+          <p>-</p>
+          <input type="text" class="form-control" [(ngModel)]="earned[4]">
+        </div>
+        <div class="grade-points-total">
+          <h4>Total Points</h4>
+          <p>-</p>
+          <input type="text" class="form-control" [(ngModel)]="total[0]">
+          <p>-</p>
+          <input type="text" class="form-control" [(ngModel)]="total[1]">
+          <p>-</p>
+          <input type="text" class="form-control" [(ngModel)]="total[2]">
+          <p>-</p>
+          <input type="text" class="form-control" [(ngModel)]="total[3]">
+          <p>-</p>
+          <input type="text" class="form-control" [(ngModel)]="total[4]">
+        </div>
+      </div>
+      <div style="padding-top: 15px; padding-left: 5px;">
+      <button class="btn btn-primary" style="width: 160px;" (click)="calculateGrade()">Calculate</button>
+      </div>
+      <h3 style="padding-left: 5px; padding-top: 15px;">Calculated Grade: {{ finalGrade !== null ? finalGrade + '%' : 'N/A' }}</h3>
+    </div>
+  </div>
+</div>
